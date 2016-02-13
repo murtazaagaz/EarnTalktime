@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
         assert getSupportActionBar() != null;
-        getSupportActionBar().setTitle(R.string.appname);
+        getSupportActionBar().setTitle("");
 
         //Hamburger icon
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,mToolbar,R.string.open,R.string.close);
