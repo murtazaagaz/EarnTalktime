@@ -1,18 +1,36 @@
 package com.murtaza.navigation1;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
-    android.support.v7.widget.Toolbar mToolbar;
+    @Bind(R.id.toolbar_layout) Toolbar mToolbar;
+    @Bind(R.id.drawerLayout) DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mActionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-   mToolbar= (Toolbar) findViewById(R.id.toolbar_layout);
-       setSupportActionBar(mToolbar);
+        ButterKnife.bind(this);
 
+        setSupportActionBar(mToolbar);
+
+        mActionBarDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,mToolbar,R.string.open,R.string.close);
+
+        mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mActionBarDrawerToggle.syncState();
     }
 }
