@@ -22,10 +22,14 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
+        assert getSupportActionBar() != null;
+        getSupportActionBar().setTitle(R.string.appname);
 
+        //Hamburger icon
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,mToolbar,R.string.open,R.string.close);
-
         mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
+
+
     }
 
     @Override
