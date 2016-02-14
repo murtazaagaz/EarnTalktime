@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.murtaza.navigation1.activity.RedeemActivuty">
+
+    <include
+        android:id="@+id/redeem_toolbar"
+        layout="@layout/toolbar_support" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/redeem_toolbar"
+        android:layout_margin="20dp"
+        android:stretchColumns="1"
+        android:id="@+id/tablelayout">
+
+        <TableRow>
+
+            <ImageView
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_phone" />
+
+            <EditText
+                android:layout_marginLeft="5dp"
+                android:hint="Enter Mobile No"
+                android:inputType="number"/>
+        </TableRow>
+
+        <TableRow>
+
+            <ImageView
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_card" />
+
+            <EditText
+                android:layout_marginLeft="5dp"
+                android:hint="Enter Amount" />
+        </TableRow>
+
+
+    </TableLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tablelayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/primary_button"
+        android:text="Recharge"
+        android:textColor="@color/icons"
+        android:id="@+id/recharhe_button"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Note: You must complete all 3 steps to get the recharge"
+        android:layout_below="@+id/recharhe_button"
+        android:gravity="center"
+        />
+
+</RelativeLayout>

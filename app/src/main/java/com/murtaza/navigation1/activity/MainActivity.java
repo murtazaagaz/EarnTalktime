@@ -1,12 +1,20 @@
 package com.murtaza.navigation1.activity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -14,6 +22,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.murtaza.navigation1.R;
+import com.murtaza.navigation1.adapter.OfferAdapter;
+import com.murtaza.navigation1.extra.Util;
 import com.murtaza.navigation1.network.ApiUrl;
 import com.murtaza.navigation1.network.VolleySingleton;
 import com.murtaza.navigation1.parser.JsonParser;
@@ -27,15 +37,18 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
-    @Bind(R.id.toolbar_layout)
-    Toolbar mToolbar;
-    @Bind(R.id.drawerLayout)
-    DrawerLayout mDrawerLayout;
+    @Bind(R.id.toolbar_layout) Toolbar mToolbar;
+    @Bind(R.id.drawerLayout) DrawerLayout mDrawerLayout;
+    @Bind(R.id.linearLayout) LinearLayout mLinearLayout;
+    @Bind(R.id.listView) ListView mListView;
+    @Bind(R.id.wallet) Button mWallet;
+
     private ActionBarDrawerToggle mActionBarDrawerToggle;
 
     //Volley
     private RequestQueue mRequestQueue;
     private List<OfferListPojo> mOfferList;
+    private ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
         assert getSupportActionBar() != null;
         getSupportActionBar().setTitle("");
 
+        //instance progress dialog
+        pd = new ProgressDialog(this);
+        pd.setMessage("Getting new offers");
+        pd.setCancelable(true);
+
         //Hamburger icon
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close);
         mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
@@ -54,8 +72,38 @@ public class MainActivity extends AppCompatActivity {
         //instanciate volley
         mRequestQueue = VolleySingleton.getInstance().getRequestQueue();
 
+        // check network connection
+        if (!Util.isnetworkavailable(getApplication())) {
+            Util.noInternetSnackbar(getApplication(), mLinearLayout);
+            return;
+        }
+
 
         getOfferListInBackground();
+
+        //When wallet btn is clickecd
+        mWallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, RedeemActivuty.class));
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        new MenuInflater(getApplication()).inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                refreshList();
+                break;
+        }
+        return true;
     }
 
     @Override
@@ -64,27 +112,57 @@ public class MainActivity extends AppCompatActivity {
         mActionBarDrawerToggle.syncState();
     }
 
+    public void refreshList() {
+        //check internet
+        if (Util.isnetworkavailable(getApplicationContext())) {
+            //fetch data
+            getOfferListInBackground();
+        } else {
+            Util.noInternetSnackbar(getApplication(), mLinearLayout);
+        }
+    }
+
     /*
     * Method to fetch Offers List
     *
     * */
+
+
     private void getOfferListInBackground() {
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, ApiUrl.OFFER_LIST, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                mOfferList = JsonParser.offerListParse(response);
-                //check list is not null
-                if(mOfferList != null){
-                    Toast.makeText(MainActivity.this,""+mOfferList.size(),Toast.LENGTH_LONG).show();
-                }
-            }
-        }, new Response.ErrorListener() {
+        pd.show();
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, ApiUrl.OFFER_LIST,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        pd.dismiss();
+                        mOfferList = JsonParser.offerListParse(response);
+                        //check list is not null
+                        if (mOfferList != null) {
+                            setupOffersFromList(mOfferList);
+                        } else {
+                            Util.redSnackbar(getApplication(), mLinearLayout, "No new offers found");
+                        }
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                pd.dismiss();
                 Log.d("HUS", "HUS: " + error.getMessage());
+
+                String errorString = VolleySingleton.handleVolleyError(error);
+                if(errorString != null){
+                    Util.redSnackbar(getApplication(),mLinearLayout,errorString);
+                }
             }
         });
 
         mRequestQueue.add(request);
     }
+
+    private void setupOffersFromList(List<OfferListPojo> mOfferList) {
+        OfferAdapter adapter = new OfferAdapter(getBaseContext(), R.layout.listvieew_layout, mOfferList);
+        mListView.setAdapter(adapter);
+    }
+
+
 }

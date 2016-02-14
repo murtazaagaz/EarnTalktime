@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<group android:checkableBehavior="single">
-</group>
-    <item android:id="@+id/home"
-        android:title="Home"
-        android:icon="@drawable/ic_home_black_48dp">
+    <group android:checkableBehavior="single"></group>
+    <item
+        android:id="@+id/earn_talktime"
+        android:icon="@drawable/ic_home_black_48dp"
+        android:title="Earn Talktime"/>
 
+    <item
+        android:id="@+id/redeem"
+        android:icon="@drawable/ic_home_black_48dp"
+        android:title="Redeem"/>
+    <item
+        android:id="@+id/invite"
+        android:icon="@drawable/ic_home_black_48dp"
+        android:title="Invite Earn 200Rs"/>
 
+    <item android:title="Rate Us">
+        <menu>
+            <item
+                android:icon="@drawable/ic_home_black_48dp"
+                android:title="Rate Us"></item>
+        </menu>
     </item>
-    <item android:title="Menu">
-    <menu>
-    <item android:title="Home"
-        android:icon="@drawable/ic_home_black_48dp"></item>
-    </menu>
-    </item>
-
 
 
 </menu>

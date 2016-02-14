@@ -3,4 +3,9 @@
     <string name="open">open</string>
     <string name="close">close</string>
     <string name="appname">Earn TalkTime</string>
+    <string name="retry">RETRY</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="rupee">\u20B9</string>
+    <string name="get_it">Get it</string>
+    <string name="refresh">Refresh</string>
 </resources>
