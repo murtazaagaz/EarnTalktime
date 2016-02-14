@@ -77,11 +77,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mRequestQueue = VolleySingleton.getInstance().getRequestQueue();
 
         //Create SharedPrefences and store wallet data
-        SharedPreferences sp = getSharedPreferences("app",MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences("app", MODE_PRIVATE);
         //get wallet amount
         String walletAmount = sp.getString("amount","0");
+        //Toast.makeText(MainActivity.this, ""+walletAmount, Toast.LENGTH_SHORT).show();
         //set amount to WalletButton
-        mWallet.append(walletAmount);
+        mWallet.setText("\u20B9 "+walletAmount);
 
         // check network connection
         if (!Util.isnetworkavailable(getApplication())) {

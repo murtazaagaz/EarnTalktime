@@ -9,7 +9,7 @@
     <Button
         android:id="@+id/wallet"
         style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_width="35dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginRight="5dp"

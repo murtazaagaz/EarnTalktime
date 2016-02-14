@@ -8,6 +8,6 @@
     <string name="rupee">\u20B9</string>
     <string name="get_it">Get it</string>
     <string name="refresh">Refresh</string>
-    <string name="install"><![CDATA[Install & get 25 ₹ ]]></string>
+    <string name="install"><![CDATA[Install & get ₹ ]]></string>
     <string name="inviate_earn_200"><![CDATA[Invite & Earn ₹ 200]]></string>
 </resources>
