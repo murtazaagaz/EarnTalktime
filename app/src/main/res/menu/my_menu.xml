@@ -13,7 +13,7 @@
     <item
         android:id="@+id/invite"
         android:icon="@drawable/ic_home_black_48dp"
-        android:title="Invite Earn 200Rs"/>
+        android:title="@string/inviate_earn_200"/>
 
     <item android:title="Rate Us">
         <menu>

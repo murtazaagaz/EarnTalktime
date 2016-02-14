@@ -2,7 +2,9 @@ package com.murtaza.navigation1.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -36,10 +38,11 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @Bind(R.id.toolbar_layout) Toolbar mToolbar;
     @Bind(R.id.drawerLayout) DrawerLayout mDrawerLayout;
     @Bind(R.id.linearLayout) LinearLayout mLinearLayout;
+    @Bind(R.id.navigation) NavigationView mNavigationView;
     @Bind(R.id.listView) ListView mListView;
     @Bind(R.id.wallet) Button mWallet;
 
@@ -69,8 +72,16 @@ public class MainActivity extends AppCompatActivity {
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.open, R.string.close);
         mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
 
+
         //instanciate volley
         mRequestQueue = VolleySingleton.getInstance().getRequestQueue();
+
+        //Create SharedPrefences and store wallet data
+        SharedPreferences sp = getSharedPreferences("app",MODE_PRIVATE);
+        //get wallet amount
+        String walletAmount = sp.getString("amount","0");
+        //set amount to WalletButton
+        mWallet.append(walletAmount);
 
         // check network connection
         if (!Util.isnetworkavailable(getApplication())) {
@@ -88,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, RedeemActivuty.class));
             }
         });
+
+        mNavigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -165,4 +178,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.earn_talktime:
+                mDrawerLayout.closeDrawers();
+                break;
+            case R.id.redeem:
+                mDrawerLayout.closeDrawers();
+                startActivity(new Intent(MainActivity.this,RedeemActivuty.class));
+                break;
+            case R.id.invite:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT,
+                        "Hey check out my app at: https://play.google.com/store/apps/details?id=com.google.android.apps.plus");
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+                break;
+        }
+        return true;
+    }
 }

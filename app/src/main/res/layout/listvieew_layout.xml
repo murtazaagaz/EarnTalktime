@@ -1,36 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="65dp"
               android:orientation="horizontal"
-              android:padding="10dp"
-    android:weightSum="5">
+              android:padding="10dp">
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="0dp"
+        android:layout_width="60dp"
         android:layout_height="match_parent"
-        android:src="@drawable/placeholder80"
-        android:layout_weight=".8"/>
+        android:src="@drawable/placeholder80"/>
 
     <TextView
         android:id="@+id/title"
         style="@style/Base.TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
         android:text="Flipkart"
-        android:layout_weight="3"/>
+        android:layout_toRightOf="@+id/image"/>
+
+    <TextView
+        android:id="@+id/display_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/install"
+        android:layout_toRightOf="@+id/image"
+        android:layout_alignParentBottom="true"/>
 
     <Button
         style="@style/Base.TextAppearance.AppCompat.Medium"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/primary_button"
         android:text="@string/get_it"
         android:textColor="@color/icons"
-        android:layout_weight="1.2"
+        android:layout_alignParentRight="true"
         android:id="@+id/button"
         />
-</LinearLayout>
+</RelativeLayout>

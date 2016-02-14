@@ -3,6 +3,7 @@ package com.murtaza.navigation1.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.murtaza.navigation1.R;
 import com.murtaza.navigation1.network.VolleySingleton;
 import com.murtaza.navigation1.pojo.OfferListPojo;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -47,6 +50,7 @@ public class OfferAdapter extends ArrayAdapter<OfferListPojo> {
         Button button = (Button) view.findViewById(R.id.button);
         final ImageView imageView = (ImageView) view.findViewById(R.id.image);
         final OfferListPojo current = mList.get(position);
+        TextView titleAmount = (TextView) view.findViewById(R.id.display_amount);
 
         //Load image
         mImageLoader = VolleySingleton.getInstance().getImageLoader();
@@ -64,11 +68,22 @@ public class OfferAdapter extends ArrayAdapter<OfferListPojo> {
         });
 
         textView.setText(current.getTitle());
+        //set amount
+        titleAmount.append(current.getAmount());
 
         //when get it button is clicked
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Add amount to sharedPrefrences
+                SharedPreferences sp = mContext.getSharedPreferences("app", Context.MODE_PRIVATE);
+                //get amount from sp
+                String amount = sp.getString("amount","0");
+                int newAmount = Integer.parseInt(amount) + Integer.parseInt(current.getAmount());
+                //store new amount in shared prefrences
+                sp.edit().putString("amount",newAmount+"").apply();
+
+                //open browser
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(current.getLink()));
                 browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(browserIntent);

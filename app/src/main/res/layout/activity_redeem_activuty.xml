@@ -21,7 +21,7 @@
 
             <ImageView
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_phone" />
+                android:src="@drawable/ic_home_black_48dp" />
 
             <EditText
                 android:layout_marginLeft="5dp"
@@ -33,7 +33,7 @@
 
             <ImageView
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_card" />
+                android:src="@drawable/ic_home_black_48dp" />
 
             <EditText
                 android:layout_marginLeft="5dp"
