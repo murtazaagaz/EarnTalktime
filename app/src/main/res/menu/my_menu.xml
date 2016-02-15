@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single"></group>
+    <group android:checkableBehavior="single"/>
     <item
         android:id="@+id/earn_talktime"
-        android:icon="@drawable/ic_home_black_48dp"
         android:title="Earn Talktime"/>
 
     <item
         android:id="@+id/redeem"
-        android:icon="@drawable/ic_home_black_48dp"
         android:title="Redeem"/>
     <item
         android:id="@+id/invite"
-        android:icon="@drawable/ic_home_black_48dp"
         android:title="@string/inviate_earn_200"/>
 
     <item android:title="Rate Us">
         <menu>
             <item
-                android:icon="@drawable/ic_home_black_48dp"
-                android:title="Rate Us"></item>
+                android:title="Rate Us"/>
         </menu>
     </item>
 

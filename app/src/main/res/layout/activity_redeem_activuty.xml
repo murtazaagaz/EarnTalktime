@@ -37,7 +37,8 @@
 
             <EditText
                 android:layout_marginLeft="5dp"
-                android:hint="Enter Amount" />
+                android:hint="Enter Amount"
+                android:inputType="number"/>
         </TableRow>
 
 
